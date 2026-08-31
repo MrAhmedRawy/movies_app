@@ -1,0 +1,29 @@
+{
+  "appTitle": "Movie App",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
+  "onboardingTitle1": "Find Your Next Favorite Movie Here",
+  "onboardingSubTitle1": "Get access to a huge library of movies to suit all tastes. You will surely like it.",
+  "discoverMovies": "Discover Movies",
+  "discoverMoviesDesc": "Explore a vast collection of movies in all qualities and genres. Find your next favorite film with ease.",
+  "exploreAllGenres": "Explore All Genres",
+  "exploreAllGenresDesc": "Discover movies from every genre, in all available qualities. Find something new and exciting to watch every day.",
+  "createWatchLists": "Create Watch Lists",
+  "createWatchListsDesc": "Save movies to your watchlist to keep track of what you want to watch next. Enjoy films in various qualities and genres.",
+  "rateReviewLearn": "Rate, Review, and Learn",
+  "rateReviewLearnDesc": "Share your thoughts on the movies you've watched. Dive deep into film details and help others discover great movies with your reviews.",
+  "startWatchingNow": "Start Watching Now",
+  "next": "Next",
+  "back": "Back",
+  "watch": "Watch",
+  "history": "History",
+  "search": "Search",
+  "pickAvatar": "Pick Avatar",
+  "resetPassword": "Reset Password",
+  "deleteAccount": "Delete Account",
+  "updateData": "Update Data",
+  "watchList": "Watch List",
+  "editProfile": "Edit Profile",
+  "exit": "Exit"
+}
