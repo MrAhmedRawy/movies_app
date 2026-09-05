@@ -4,7 +4,6 @@ import 'package:movies_app/presentation/screens/login_screens/login_screen.dart'
 
 import '../../core/constants/app_images.dart';
 import '../../core/constants/app_strings.dart';
-import 'onboarding.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
