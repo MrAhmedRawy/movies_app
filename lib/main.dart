@@ -11,6 +11,8 @@ import 'package:movies_app/logic/cubits/watchlist/watchlist_cubit.dart';
 import 'package:movies_app/presentation/screens/splash_screen.dart';
 
 import 'core/constants/app_colors.dart';
+import 'data/data_sources/movie_api_service.dart';
+import 'data/repositories/movie_repository.dart';
 import 'l10n/app_localizations.dart';
 
 void main() async {
@@ -18,11 +20,17 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+
+  final movieApiService = MovieApiService();
+  final movieRepository = MovieRepository(movieApiService);
+
+  runApp(MyApp(movieRepository: movieRepository));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final MovieRepository movieRepository;
+
+  const MyApp({super.key, required this.movieRepository});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +38,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => AuthCubit()),
         BlocProvider(create: (context) => LanguageCubit()),
-        BlocProvider(create: (context) => MoviesCubit()),
+        BlocProvider(create: (context) => MoviesCubit(movieRepository)),
         BlocProvider(create: (context) => WatchlistCubit()),
       ],
       child: ScreenUtilInit(
@@ -38,36 +46,39 @@ class MyApp extends StatelessWidget {
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (context, child) {
-          return MaterialApp(
-            locale: context.watch<LanguageCubit>().state,
-            debugShowCheckedModeBanner: false,
-            onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,
-            localizationsDelegates: const [
-              AppLocalizations.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            supportedLocales: const [
-              Locale('en'),
-              Locale('ar'),
-            ],
-            themeMode: ThemeMode.dark,
-            theme: ThemeData(
-              brightness: Brightness.light,
-              useMaterial3: true,
-            ),
-            darkTheme: ThemeData(
-              brightness: Brightness.dark,
-              scaffoldBackgroundColor: AppColors.black,
-              colorScheme: ColorScheme.fromSeed(
-                seedColor: AppColors.yellow,
-                brightness: Brightness.dark,
-                surface: AppColors.black,
+          return GestureDetector(
+            onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+            child: MaterialApp(
+              locale: context.watch<LanguageCubit>().state,
+              debugShowCheckedModeBanner: false,
+              onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,
+              localizationsDelegates: const [
+                AppLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              supportedLocales: const [
+                Locale('en'),
+                Locale('ar'),
+              ],
+              themeMode: ThemeMode.dark,
+              theme: ThemeData(
+                brightness: Brightness.light,
+                useMaterial3: true,
               ),
-              useMaterial3: true,
+              darkTheme: ThemeData(
+                brightness: Brightness.dark,
+                scaffoldBackgroundColor: AppColors.black,
+                colorScheme: ColorScheme.fromSeed(
+                  seedColor: AppColors.yellow,
+                  brightness: Brightness.dark,
+                  surface: AppColors.black,
+                ),
+                useMaterial3: true,
+              ),
+              home: child,
             ),
-            home: child,
           );
         },
         child: const SplashScreen(),

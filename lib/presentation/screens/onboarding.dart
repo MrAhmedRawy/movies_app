@@ -33,7 +33,7 @@ class _OnboardingState extends State<Onboarding> {
               } else {
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => const HomeScreen()),
+                  MaterialPageRoute(builder: (context) => HomeScreen(key: HomeScreen.homeKey)),
                 );
               }
             },

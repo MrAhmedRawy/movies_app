@@ -45,143 +45,140 @@ class _LoginScreenState extends State<LoginScreen> {
           );
         }
       },
-      child: GestureDetector(
-        onTap: () => FocusScope.of(context).unfocus(),
-        child: Scaffold(
-          body: SafeArea(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24.w),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(height: 60.h),
-                    Image.asset(AppImages.appIcon, width: 121.w),
-                    SizedBox(height: 50.h),
-                    CustomTextField(
-                      hintText: AppLocalizations.of(context)!.email,
-                      prefixIcon: Icons.email,
-                      controller: emailController,
+      child: Scaffold(
+        body: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 24.w),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(height: 60.h),
+                  Image.asset(AppImages.appIcon, width: 121.w),
+                  SizedBox(height: 50.h),
+                  CustomTextField(
+                    hintText: AppLocalizations.of(context)!.email,
+                    prefixIcon: Icons.email,
+                    controller: emailController,
+                  ),
+                  SizedBox(height: 20.h),
+                  CustomTextField(
+                    hintText: AppLocalizations.of(context)!.password,
+                    prefixIcon: Icons.lock,
+                    isPassword: true,
+                    controller: passwordController,
+                  ),
+                  SizedBox(height: 10.h),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ForgetPasswordScreen(),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        AppLocalizations.of(context)!.forgetPassword,
+                        style: TextStyle(color: AppColors.yellow),
+                      ),
                     ),
-                    SizedBox(height: 20.h),
-                    CustomTextField(
-                      hintText: AppLocalizations.of(context)!.password,
-                      prefixIcon: Icons.lock,
-                      isPassword: true,
-                      controller: passwordController,
-                    ),
-                    SizedBox(height: 10.h),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: TextButton(
+                  ),
+                  SizedBox(height: 20.h),
+                  BlocBuilder<AuthCubit, AuthState>(
+                    builder: (context, state) {
+                      if (state is AuthLoading) {
+                        return const Center(
+                            child: CircularProgressIndicator(color: AppColors.yellow));
+                      }
+                      return CustomButton(
+                        text: AppLocalizations.of(context)!.login,
                         onPressed: () {
+                          final email = emailController.text.trim();
+                          final password = passwordController.text;
+                          final local = AppLocalizations.of(context)!;
+
+                          if (email.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text(local.emailEmpty)),
+                            );
+                            return;
+                          }
+                          if (!Validators.isValidEmail(email)) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text(local.emailInvalid)),
+                            );
+                            return;
+                          }
+                          if (password.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text(local.passwordEmpty)),
+                            );
+                            return;
+                          }
+
+                          context.read<AuthCubit>().loginWithEmail(email, password);
+                        },
+                      );
+                    },
+                  ),
+                  SizedBox(height: 20.h),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)!.dontHaveAccount,
+                        style: TextStyle(color: AppColors.white),
+                      ),
+                      GestureDetector(
+                        onTap: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const ForgetPasswordScreen(),
+                              builder: (context) => const RegisterScreen(),
                             ),
                           );
                         },
                         child: Text(
-                          AppLocalizations.of(context)!.forgetPassword,
+                          AppLocalizations.of(context)!.createOne,
+                          style: TextStyle(
+                            color: AppColors.yellow,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 30.h),
+                  Row(
+                    children: [
+                      const Expanded(child: Divider(color: AppColors.yellow)),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 10.w),
+                        child: Text(
+                          AppLocalizations.of(context)!.or,
                           style: TextStyle(color: AppColors.yellow),
                         ),
                       ),
+                      const Expanded(child: Divider(color: AppColors.yellow)),
+                    ],
+                  ),
+                  SizedBox(height: 30.h),
+                  CustomButton(
+                    text: AppLocalizations.of(context)!.loginWithGoogle,
+                    prefixIcon: Image.asset(
+                      AppImages.googleIcon,
+                      width: 24.w,
                     ),
-                    SizedBox(height: 20.h),
-                    BlocBuilder<AuthCubit, AuthState>(
-                      builder: (context, state) {
-                        if (state is AuthLoading) {
-                          return const Center(
-                              child: CircularProgressIndicator(color: AppColors.yellow));
-                        }
-                        return CustomButton(
-                          text: AppLocalizations.of(context)!.login,
-                          onPressed: () {
-                            final email = emailController.text.trim();
-                            final password = passwordController.text;
-                            final local = AppLocalizations.of(context)!;
-
-                            if (email.isEmpty) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text(local.emailEmpty)),
-                              );
-                              return;
-                            }
-                            if (!Validators.isValidEmail(email)) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text(local.emailInvalid)),
-                              );
-                              return;
-                            }
-                            if (password.isEmpty) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text(local.passwordEmpty)),
-                              );
-                              return;
-                            }
-
-                            context.read<AuthCubit>().loginWithEmail(email, password);
-                          },
-                        );
-                      },
-                    ),
-                    SizedBox(height: 20.h),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          AppLocalizations.of(context)!.dontHaveAccount,
-                          style: TextStyle(color: AppColors.white),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const RegisterScreen(),
-                              ),
-                            );
-                          },
-                          child: Text(
-                            AppLocalizations.of(context)!.createOne,
-                            style: TextStyle(
-                              color: AppColors.yellow,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 30.h),
-                    Row(
-                      children: [
-                        const Expanded(child: Divider(color: AppColors.yellow)),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10.w),
-                          child: Text(
-                            AppLocalizations.of(context)!.or,
-                            style: TextStyle(color: AppColors.yellow),
-                          ),
-                        ),
-                        const Expanded(child: Divider(color: AppColors.yellow)),
-                      ],
-                    ),
-                    SizedBox(height: 30.h),
-                    CustomButton(
-                      text: AppLocalizations.of(context)!.loginWithGoogle,
-                      prefixIcon: Image.asset(
-                        AppImages.googleIcon,
-                        width: 24.w,
-                      ),
-                      onPressed: () {
-                        context.read<AuthCubit>().loginWithGoogle();
-                      },
-                    ),
-                    SizedBox(height: 30.h),
-                    const LanguageToggle(),
-                  ],
-                ),
+                    onPressed: () {
+                      context.read<AuthCubit>().loginWithGoogle();
+                    },
+                  ),
+                  SizedBox(height: 30.h),
+                  const LanguageToggle(),
+                ],
               ),
             ),
           ),

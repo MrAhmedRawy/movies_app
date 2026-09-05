@@ -127,4 +127,30 @@ class AuthCubit extends Cubit<AuthState> {
       emit(AuthError("An unexpected error occurred"));
     }
   }
+
+  Future<void> fetchUserData() async {
+    emit(AuthLoading());
+    try {
+      final user = _auth.currentUser;
+      if (user != null) {
+        final doc = await _firestore.collection('users').doc(user.uid).get();
+        if (doc.exists) {
+          emit(UserDataLoaded(doc.data()!));
+        } else {
+          emit(AuthError("User data not found"));
+        }
+      } else {
+        emit(AuthInitial());
+      }
+    } catch (e) {
+      emit(AuthError(e.toString()));
+    }
+  }
+
+  Future<void> signOut() async {
+    await _auth.signOut();
+    await _googleSignIn.signOut();
+    emit(AuthInitial());
+  }
 }
+
