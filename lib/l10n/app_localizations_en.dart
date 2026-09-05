@@ -50,6 +50,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get startWatchingNow => 'Start Watching Now';
 
   @override
+  String get exploreNow => 'Explore Now';
+
+  @override
   String get next => 'Next';
 
   @override
@@ -84,4 +87,82 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get exit => 'Exit';
+
+  @override
+  String get finish => 'Finish';
+
+  @override
+  String get login => 'Login';
+
+  @override
+  String get email => 'Email';
+
+  @override
+  String get password => 'Password';
+
+  @override
+  String get forgetPassword => 'Forget Password ?';
+
+  @override
+  String get dontHaveAccount => 'Don\'t Have Account ?';
+
+  @override
+  String get createOne => ' Create One';
+
+  @override
+  String get or => 'OR';
+
+  @override
+  String get loginWithGoogle => 'Login With Google';
+
+  @override
+  String get register => 'Register';
+
+  @override
+  String get name => 'Name';
+
+  @override
+  String get confirmPassword => 'Confirm Password';
+
+  @override
+  String get phoneNumber => 'Phone Number';
+
+  @override
+  String get createAccount => 'Create Account';
+
+  @override
+  String get alreadyHaveAccount => 'Already Have Account ? ';
+
+  @override
+  String get avatar => 'Avatar';
+
+  @override
+  String get verifyEmail => 'Verify Email';
+
+  @override
+  String get emailEmpty => 'Email cannot be empty';
+
+  @override
+  String get emailInvalid => 'Please enter a valid email';
+
+  @override
+  String get passwordEmpty => 'Password cannot be empty';
+
+  @override
+  String get nameEmpty => 'Name cannot be empty';
+
+  @override
+  String get phoneEmpty => 'Phone number cannot be empty';
+
+  @override
+  String get passwordsNotMatch => 'Passwords do not match';
+
+  @override
+  String get userNotFound => 'No user found with this email.';
+
+  @override
+  String get passwordResetSent => 'Password reset email sent!';
+
+  @override
+  String get wrongEmailOrPassword => 'Wrong Email or Password';
 }

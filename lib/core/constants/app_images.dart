@@ -16,6 +16,7 @@ class AppImages {
   static const String drStrange = "${_imagePath}drStrange.png";
   static const String routeLogo = "${_imagePath}routeLogo.png";
   static const String oppenheimer = "${_imagePath}oppenheimer.png";
+  static const String googleIcon = "${_imagePath}googleIcon.png";
   static const String availableNow = "${_imagePath}availableNow.png";
   static const String forgotPassword = "${_imagePath}forgotPassword.png";
   static const String moviesPostersGroup = "${_imagePath}Movies Posters Group.png";

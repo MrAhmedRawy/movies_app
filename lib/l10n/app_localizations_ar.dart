@@ -50,6 +50,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get startWatchingNow => 'ابدأ المشاهدة الآن';
 
   @override
+  String get exploreNow => 'استكشف الآن';
+
+  @override
   String get next => 'التالي';
 
   @override
@@ -84,4 +87,83 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get exit => 'خروج';
+
+  @override
+  String get finish => 'إنهاء';
+
+  @override
+  String get login => 'تسجيل الدخول';
+
+  @override
+  String get email => 'البريد الإلكتروني';
+
+  @override
+  String get password => 'كلمة المرور';
+
+  @override
+  String get forgetPassword => 'نسيت كلمة المرور ؟';
+
+  @override
+  String get dontHaveAccount => 'ليس لديك حساب ؟';
+
+  @override
+  String get createOne => ' أنشئ حساباً';
+
+  @override
+  String get or => 'أو';
+
+  @override
+  String get loginWithGoogle => 'تسجيل الدخول باستخدام جوجل';
+
+  @override
+  String get register => 'إنشاء حساب';
+
+  @override
+  String get name => 'الاسم';
+
+  @override
+  String get confirmPassword => 'تأكيد كلمة المرور';
+
+  @override
+  String get phoneNumber => 'رقم الهاتف';
+
+  @override
+  String get createAccount => 'إنشاء الحساب';
+
+  @override
+  String get alreadyHaveAccount => 'لديك حساب بالفعل ؟ ';
+
+  @override
+  String get avatar => 'الصورة الرمزية';
+
+  @override
+  String get verifyEmail => 'التحقق من البريد';
+
+  @override
+  String get emailEmpty => 'البريد الإلكتروني لا يمكن أن يكون فارغاً';
+
+  @override
+  String get emailInvalid => 'يرجى إدخال بريد إلكتروني صالح';
+
+  @override
+  String get passwordEmpty => 'كلمة المرور لا يمكن أن تكون فارغة';
+
+  @override
+  String get nameEmpty => 'الاسم لا يمكن أن يكون فارغاً';
+
+  @override
+  String get phoneEmpty => 'رقم الهاتف لا يمكن أن يكون فارغاً';
+
+  @override
+  String get passwordsNotMatch => 'كلمتا المرور غير متطابقتين';
+
+  @override
+  String get userNotFound => 'لم يتم العثور على مستخدم بهذا البريد الإلكتروني.';
+
+  @override
+  String get passwordResetSent => 'تم إرسال رابط إعادة تعيين كلمة المرور!';
+
+  @override
+  String get wrongEmailOrPassword =>
+      'البريد الإلكتروني أو كلمة المرور غير صحيحة';
 }
