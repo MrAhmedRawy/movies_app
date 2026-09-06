@@ -46,12 +46,16 @@ class AuthCubit extends Cubit<AuthState> {
       );
       UserCredential userCredential = await _auth.signInWithCredential(credential);
       
-      if (userCredential.additionalUserInfo?.isNewUser ?? false) {
-        await _firestore.collection('users').doc(userCredential.user!.uid).set({
-          'name': userCredential.user!.displayName,
-          'email': userCredential.user!.email,
-          'phone': userCredential.user!.phoneNumber,
-          'avatar': userCredential.user!.photoURL,
+      final user = userCredential.user!;
+      final userDoc = await _firestore.collection('users').doc(user.uid).get();
+      
+      if (!userDoc.exists) {
+        await _firestore.collection('users').doc(user.uid).set({
+          'name': user.displayName ?? "User",
+          'email': user.email,
+          'phone': user.phoneNumber,
+          'avatar': user.photoURL ?? "assets/avatars/avtr01.png",
+          'uid': user.uid,
         });
       }
       
@@ -102,17 +106,6 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> resetPassword(String email) async {
     emit(AuthLoading());
     try {
-      // Check if user exists in Firestore first
-      final querySnapshot = await _firestore
-          .collection('users')
-          .where('email', isEqualTo: email)
-          .get();
-
-      if (querySnapshot.docs.isEmpty) {
-        emit(AuthError("user-not-found"));
-        return;
-      }
-
       await _auth.sendPasswordResetEmail(email: email);
       emit(AuthSuccess());
     } on FirebaseAuthException catch (e) {
@@ -137,7 +130,16 @@ class AuthCubit extends Cubit<AuthState> {
         if (doc.exists) {
           emit(UserDataLoaded(doc.data()!));
         } else {
-          emit(AuthError("User data not found"));
+          // If Firestore data is missing but user is authenticated, recreate it with Auth info
+          final data = {
+            'name': user.displayName ?? "User",
+            'email': user.email,
+            'phone': user.phoneNumber,
+            'avatar': user.photoURL ?? "assets/avatars/avtr01.png",
+            'uid': user.uid,
+          };
+          await _firestore.collection('users').doc(user.uid).set(data);
+          emit(UserDataLoaded(data));
         }
       } else {
         emit(AuthInitial());
@@ -151,6 +153,48 @@ class AuthCubit extends Cubit<AuthState> {
     await _auth.signOut();
     await _googleSignIn.signOut();
     emit(AuthInitial());
+  }
+
+  Future<void> updateProfile({
+    required String name,
+    required String phone,
+    required String avatar,
+  }) async {
+    emit(AuthLoading());
+    try {
+      final user = _auth.currentUser;
+      if (user != null) {
+        await _firestore.collection('users').doc(user.uid).update({
+          'name': name,
+          'phone': phone,
+          'avatar': avatar,
+        });
+        await fetchUserData();
+      }
+    } catch (e) {
+      emit(AuthError("Failed to update profile"));
+    }
+  }
+
+  Future<void> deleteAccount() async {
+    emit(AuthLoading());
+    try {
+      final user = _auth.currentUser;
+      if (user != null) {
+        await _firestore.collection('users').doc(user.uid).delete();
+        await user.delete();
+        await _googleSignIn.signOut();
+        emit(AuthInitial());
+      }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'requires-recent-login') {
+        emit(AuthError("re-authenticate-required"));
+      } else {
+        emit(AuthError(e.message ?? "Failed to delete account"));
+      }
+    } catch (e) {
+      emit(AuthError("An unexpected error occurred"));
+    }
   }
 }
 

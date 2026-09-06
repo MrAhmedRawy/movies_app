@@ -7,6 +7,8 @@ class CustomButton extends StatelessWidget {
   final VoidCallback onPressed;
   final bool isYellow;
   final Widget? prefixIcon;
+  final Color? backgroundColor;
+  final Color? textColor;
 
   const CustomButton({
     super.key,
@@ -14,6 +16,8 @@ class CustomButton extends StatelessWidget {
     required this.onPressed,
     this.isYellow = true,
     this.prefixIcon,
+    this.backgroundColor,
+    this.textColor,
   });
 
   @override
@@ -24,9 +28,9 @@ class CustomButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: isYellow ? AppColors.yellow : Colors.transparent,
-          side: isYellow ? null : const BorderSide(color: AppColors.yellow, width: 2),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.r)),
+          backgroundColor: backgroundColor ?? (isYellow ? AppColors.yellow : Colors.transparent),
+          side: (isYellow || backgroundColor != null) ? null : const BorderSide(color: AppColors.yellow, width: 2),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.r)),
           elevation: 0,
         ),
         child: Row(
@@ -41,7 +45,7 @@ class CustomButton extends StatelessWidget {
               style: TextStyle(
                 fontSize: 20.sp,
                 fontWeight: FontWeight.w600,
-                color: isYellow ? AppColors.black : AppColors.yellow,
+                color: textColor ?? (isYellow ? AppColors.black : AppColors.yellow),
               ),
             ),
           ],

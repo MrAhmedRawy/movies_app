@@ -12,6 +12,7 @@ import '../../data/models/movie_model.dart';
 import '../../logic/cubits/watchlist/watchlist_cubit.dart';
 import '../../logic/cubits/watchlist/watchlist_state.dart';
 import '../widgets/movie_card.dart';
+import 'update_profile_screen.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
@@ -67,7 +68,7 @@ class _ProfileViewState extends State<ProfileView> {
                     SizedBox(height: 60.h),
                     _buildHeader(data, watchlistCount, historyCount),
                     SizedBox(height: 30.h),
-                    _buildActionButtons(),
+                    _buildActionButtons(data),
                     SizedBox(height: 30.h),
                     _buildTabs(),
                     Expanded(
@@ -103,9 +104,27 @@ class _ProfileViewState extends State<ProfileView> {
               );
             },
           );
+        } else if (authState is AuthError) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  authState.message,
+                  style: const TextStyle(color: Colors.red),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 16.h),
+                ElevatedButton(
+                  onPressed: () => context.read<AuthCubit>().fetchUserData(),
+                  child: const Text("Retry"),
+                ),
+              ],
+            ),
+          );
         }
         return const Center(
-          child: Text("Error loading profile", style: TextStyle(color: Colors.white)),
+          child: CircularProgressIndicator(color: AppColors.yellow),
         );
       },
     );
@@ -117,8 +136,17 @@ class _ProfileViewState extends State<ProfileView> {
         Column(
           children: [
             CircleAvatar(
-              radius: 50.r,
-              backgroundImage: AssetImage(data['avatar'] ?? AppImages.avtr01),
+              radius: 53.r,
+              backgroundColor: AppColors.yellow,
+              child: CircleAvatar(
+                radius: 50.r,
+                backgroundColor: AppColors.darkGray,
+                backgroundImage: (data['avatar'] != null && data['avatar'].toString().isNotEmpty)
+                    ? (data['avatar'].toString().startsWith('http')
+                        ? NetworkImage(data['avatar'])
+                        : AssetImage(data['avatar']) as ImageProvider)
+                    : AssetImage(AppImages.avtr01),
+              ),
             ),
             SizedBox(height: 12.h),
             Text(
@@ -164,14 +192,21 @@ class _ProfileViewState extends State<ProfileView> {
     );
   }
 
-  Widget _buildActionButtons() {
+  Widget _buildActionButtons(Map<String, dynamic> data) {
     return Row(
       children: [
         Expanded(
           flex: 2,
           child: CustomButton(
             text: 'Edit Profile',
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => UpdateProfileScreen(userData: data),
+                ),
+              );
+            },
           ),
         ),
         SizedBox(width: 16.w),
