@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../core/constants/app_colors.dart';
+import '../../l10n/app_localizations.dart';
 import '../../logic/cubits/movies/movies_cubit.dart';
 import '../../logic/cubits/movies/movies_state.dart';
 import '../widgets/movie_card.dart';
@@ -85,6 +86,7 @@ class _BrowseViewState extends State<BrowseView> {
 
   @override
   Widget build(BuildContext context) {
+    final local = AppLocalizations.of(context)!;
     return Column(
       children: [
         SizedBox(height: 60.h),
@@ -115,7 +117,7 @@ class _BrowseViewState extends State<BrowseView> {
                   ),
                   child: Center(
                     child: Text(
-                      categories[index],
+                      _getTranslatedGenre(categories[index], local),
                       style: TextStyle(
                         color: isSelected ? Colors.black : AppColors.yellow,
                         fontWeight: FontWeight.bold,
@@ -160,5 +162,56 @@ class _BrowseViewState extends State<BrowseView> {
         ),
       ],
     );
+  }
+
+  String _getTranslatedGenre(String genre, AppLocalizations local) {
+    switch (genre.toLowerCase()) {
+      case 'action':
+        return local.action;
+      case 'adventure':
+        return local.adventure;
+      case 'animation':
+        return local.animation;
+      case 'biography':
+        return local.biography;
+      case 'comedy':
+        return local.comedy;
+      case 'crime':
+        return local.crime;
+      case 'documentary':
+        return local.documentary;
+      case 'drama':
+        return local.drama;
+      case 'family':
+        return local.family;
+      case 'fantasy':
+        return local.fantasy;
+      case 'history':
+        return local.historyGenre;
+      case 'horror':
+        return local.horror;
+      case 'music':
+        return local.music;
+      case 'musical':
+        return local.musical;
+      case 'mystery':
+        return local.mystery;
+      case 'news':
+        return local.news;
+      case 'romance':
+        return local.romance;
+      case 'sci-fi':
+        return local.sciFi;
+      case 'sport':
+        return local.sport;
+      case 'thriller':
+        return local.thriller;
+      case 'war':
+        return local.war;
+      case 'western':
+        return local.western;
+      default:
+        return genre;
+    }
   }
 }

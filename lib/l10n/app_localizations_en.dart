@@ -165,4 +165,125 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get wrongEmailOrPassword => 'Wrong Email or Password';
+
+  @override
+  String get screenshots => 'Screen Shots';
+
+  @override
+  String get similar => 'Similar';
+
+  @override
+  String get summary => 'Summary';
+
+  @override
+  String get cast => 'Cast';
+
+  @override
+  String get genres => 'Genres';
+
+  @override
+  String get noMoviesFound => 'No movies found';
+
+  @override
+  String get profileUpdated => 'Profile updated successfully';
+
+  @override
+  String get resetLinkSent => 'Reset link sent to your email';
+
+  @override
+  String get deleteAccountConfirm =>
+      'Are you sure you want to delete your account? This action cannot be undone.';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get delete => 'Delete';
+
+  @override
+  String get retry => 'Retry';
+
+  @override
+  String get userName => 'User Name';
+
+  @override
+  String get seeMore => 'See More';
+
+  @override
+  String get wishList => 'Wish List';
+
+  @override
+  String get action => 'Action';
+
+  @override
+  String get adventure => 'Adventure';
+
+  @override
+  String get animation => 'Animation';
+
+  @override
+  String get biography => 'Biography';
+
+  @override
+  String get comedy => 'Comedy';
+
+  @override
+  String get crime => 'Crime';
+
+  @override
+  String get documentary => 'Documentary';
+
+  @override
+  String get drama => 'Drama';
+
+  @override
+  String get family => 'Family';
+
+  @override
+  String get fantasy => 'Fantasy';
+
+  @override
+  String get historyGenre => 'History';
+
+  @override
+  String get horror => 'Horror';
+
+  @override
+  String get music => 'Music';
+
+  @override
+  String get musical => 'Musical';
+
+  @override
+  String get mystery => 'Mystery';
+
+  @override
+  String get news => 'News';
+
+  @override
+  String get romance => 'Romance';
+
+  @override
+  String get sciFi => 'Sci-Fi';
+
+  @override
+  String get sport => 'Sport';
+
+  @override
+  String get thriller => 'Thriller';
+
+  @override
+  String get war => 'War';
+
+  @override
+  String get western => 'Western';
+
+  @override
+  String get character => 'Character';
+
+  @override
+  String get unknown => 'Unknown';
+
+  @override
+  String get supervisedBy => 'Supervised by Mohamed Nabil';
 }

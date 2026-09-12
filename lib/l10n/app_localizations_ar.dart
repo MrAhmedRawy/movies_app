@@ -158,7 +158,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get passwordsNotMatch => 'كلمتا المرور غير متطابقتين';
 
   @override
-  String get userNotFound => 'لم يتم العثور على مستخدم بهذا البريد الإلكتروني.';
+  String get userNotFound => 'لم يتم العظور على مستخدم بهذا البريد الإلكتروني.';
 
   @override
   String get passwordResetSent => 'تم إرسال رابط إعادة تعيين كلمة المرور!';
@@ -166,4 +166,126 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get wrongEmailOrPassword =>
       'البريد الإلكتروني أو كلمة المرور غير صحيحة';
+
+  @override
+  String get screenshots => 'لقطات الشاشة';
+
+  @override
+  String get similar => 'مشابه';
+
+  @override
+  String get summary => 'الملخص';
+
+  @override
+  String get cast => 'طاقم العمل';
+
+  @override
+  String get genres => 'الأنواع';
+
+  @override
+  String get noMoviesFound => 'لم يتم العثور على أفلام';
+
+  @override
+  String get profileUpdated => 'تم تحديث الملف الشخصي بنجاح';
+
+  @override
+  String get resetLinkSent =>
+      'تم إرسال رابط إعادة التعيين إلى بريدك الإلكتروني';
+
+  @override
+  String get deleteAccountConfirm =>
+      'هل أنت متأكد أنك تريد حذف حسابك؟ لا يمكن التراجع عن هذا الإجراء.';
+
+  @override
+  String get cancel => 'إلغاء';
+
+  @override
+  String get delete => 'حذف';
+
+  @override
+  String get retry => 'إعادة المحاولة';
+
+  @override
+  String get userName => 'اسم المستخدم';
+
+  @override
+  String get seeMore => 'شاهد المزيد';
+
+  @override
+  String get wishList => 'قائمة الرغبات';
+
+  @override
+  String get action => 'أكشن';
+
+  @override
+  String get adventure => 'مغامرة';
+
+  @override
+  String get animation => 'رسوم متحركة';
+
+  @override
+  String get biography => 'سيرة ذاتية';
+
+  @override
+  String get comedy => 'كوميديا';
+
+  @override
+  String get crime => 'جريمة';
+
+  @override
+  String get documentary => 'وثائقي';
+
+  @override
+  String get drama => 'دراما';
+
+  @override
+  String get family => 'عائلي';
+
+  @override
+  String get fantasy => 'خيال';
+
+  @override
+  String get historyGenre => 'تاريخ';
+
+  @override
+  String get horror => 'رعب';
+
+  @override
+  String get music => 'موسيقى';
+
+  @override
+  String get musical => 'موسيقي';
+
+  @override
+  String get mystery => 'غموض';
+
+  @override
+  String get news => 'أخبار';
+
+  @override
+  String get romance => 'رومانسية';
+
+  @override
+  String get sciFi => 'خيال علمي';
+
+  @override
+  String get sport => 'رياضة';
+
+  @override
+  String get thriller => 'إثارة';
+
+  @override
+  String get war => 'حرب';
+
+  @override
+  String get western => 'غربي';
+
+  @override
+  String get character => 'الشخصية';
+
+  @override
+  String get unknown => 'غير معروف';
+
+  @override
+  String get supervisedBy => 'إشراف محمد نبيل';
 }

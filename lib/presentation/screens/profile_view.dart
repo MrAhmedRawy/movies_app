@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../core/constants/app_colors.dart';
 import '../../core/constants/app_images.dart';
+import '../../l10n/app_localizations.dart';
 import '../../logic/cubits/auth/auth_cubit.dart';
 import '../../logic/cubits/auth/auth_state.dart';
 import '../widgets/custom_button.dart';
@@ -33,6 +34,7 @@ class _ProfileViewState extends State<ProfileView> {
 
   @override
   Widget build(BuildContext context) {
+    final local = AppLocalizations.of(context)!;
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is AuthInitial) {
@@ -66,19 +68,22 @@ class _ProfileViewState extends State<ProfileView> {
                 child: Column(
                   children: [
                     SizedBox(height: 60.h),
-                    _buildHeader(data, watchlistCount, historyCount),
+                    _buildHeader(data, watchlistCount, historyCount, local),
                     SizedBox(height: 30.h),
-                    _buildActionButtons(data),
+                    _buildActionButtons(data, local),
                     SizedBox(height: 30.h),
-                    _buildTabs(),
+                    _buildTabs(local),
                     Expanded(
                       child: isLoadingLists 
                         ? const Center(child: CircularProgressIndicator(color: AppColors.yellow))
                         : movies.isEmpty
-                          ? Center(
-                              child: Image.asset(
-                                AppImages.popCorn,
-                                width: 200.w,
+                          ? Padding(
+                              padding: EdgeInsets.only(bottom: 100.h),
+                              child: Center(
+                                child: Image.asset(
+                                  AppImages.popCorn,
+                                  width: 124.w,
+                                ),
                               ),
                             )
                           : GridView.builder(
@@ -117,7 +122,7 @@ class _ProfileViewState extends State<ProfileView> {
                 SizedBox(height: 16.h),
                 ElevatedButton(
                   onPressed: () => context.read<AuthCubit>().fetchUserData(),
-                  child: const Text("Retry"),
+                  child: Text(local.retry),
                 ),
               ],
             ),
@@ -130,7 +135,7 @@ class _ProfileViewState extends State<ProfileView> {
     );
   }
 
-  Widget _buildHeader(Map<String, dynamic> data, String watchlistCount, String historyCount) {
+  Widget _buildHeader(Map<String, dynamic> data, String watchlistCount, String historyCount, AppLocalizations local) {
     return Row(
       children: [
         Column(
@@ -150,7 +155,7 @@ class _ProfileViewState extends State<ProfileView> {
             ),
             SizedBox(height: 12.h),
             Text(
-              data['name'] ?? "User Name",
+              data['name'] ?? local.userName,
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 20.sp,
@@ -160,9 +165,9 @@ class _ProfileViewState extends State<ProfileView> {
           ],
         ),
         const Spacer(),
-        _buildStatItem(watchlistCount, "Wish List"),
+        _buildStatItem(watchlistCount, local.wishList),
         SizedBox(width: 38.w),
-        _buildStatItem(historyCount, "History"),
+        _buildStatItem(historyCount, local.history),
         const Spacer(),
       ],
     );
@@ -192,13 +197,13 @@ class _ProfileViewState extends State<ProfileView> {
     );
   }
 
-  Widget _buildActionButtons(Map<String, dynamic> data) {
+  Widget _buildActionButtons(Map<String, dynamic> data, AppLocalizations local) {
     return Row(
       children: [
         Expanded(
           flex: 2,
           child: CustomButton(
-            text: 'Edit Profile',
+            text: local.editProfile,
             onPressed: () {
               Navigator.push(
                 context,
@@ -224,7 +229,7 @@ class _ProfileViewState extends State<ProfileView> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Exit',
+                  local.exit,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18.sp,
@@ -241,17 +246,17 @@ class _ProfileViewState extends State<ProfileView> {
     );
   }
 
-  Widget _buildTabs() {
+  Widget _buildTabs(AppLocalizations local) {
     return Column(
       children: [
         Row(
           children: [
-            _buildTabItem(Icons.list, 'Watch List', _selectedTab == 0, () {
+            _buildTabItem(Icons.list, local.watchList, _selectedTab == 0, () {
               setState(() {
                 _selectedTab = 0;
               });
             }),
-            _buildTabItem(Icons.folder, 'History', _selectedTab == 1, () {
+            _buildTabItem(Icons.folder, local.history, _selectedTab == 1, () {
               setState(() {
                 _selectedTab = 1;
               });

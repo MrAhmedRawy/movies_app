@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../core/constants/app_colors.dart';
 import '../../core/constants/app_images.dart';
+import '../../l10n/app_localizations.dart';
 import '../../logic/cubits/movies/movies_cubit.dart';
 import '../../logic/cubits/movies/movies_state.dart';
 import '../widgets/movie_card.dart';
@@ -39,6 +40,7 @@ class _SearchViewState extends State<SearchView> {
 
   @override
   Widget build(BuildContext context) {
+    final local = AppLocalizations.of(context)!;
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.w),
       child: Column(
@@ -60,9 +62,9 @@ class _SearchViewState extends State<SearchView> {
               },
               style: const TextStyle(color: Colors.white),
               decoration: InputDecoration(
-                hintText: 'Search',
+                hintText: local.search,
                 hintStyle: const TextStyle(color: Colors.white54),
-                icon: const Icon(Icons.search, color: Colors.white54),
+                icon: Image.asset(AppImages.searchIcon, width: 24.w),
                 border: InputBorder.none,
               ),
             ),
@@ -70,10 +72,13 @@ class _SearchViewState extends State<SearchView> {
           SizedBox(height: 20.h),
           Expanded(
             child: _searchController.text.isEmpty
-                ? Center(
-                    child: Image.asset(
-                      AppImages.popCorn,
-                      width: 200.w,
+                ? Padding(
+                    padding: EdgeInsets.only(bottom: 100.h),
+                    child: Center(
+                      child: Image.asset(
+                        AppImages.popCorn,
+                        width: 124.w,
+                      ),
                     ),
                   )
                 : BlocBuilder<MoviesCubit, MoviesState>(
@@ -88,9 +93,9 @@ class _SearchViewState extends State<SearchView> {
                                 color: AppColors.yellow));
                       } else if (state is MoviesLoaded) {
                         if (state.movies.isEmpty) {
-                          return const Center(
-                              child: Text("No movies found",
-                                  style: TextStyle(color: Colors.white)));
+                          return Center(
+                              child: Text(local.noMoviesFound,
+                                  style: const TextStyle(color: Colors.white)));
                         }
                         return GridView.builder(
                           controller: _scrollController,

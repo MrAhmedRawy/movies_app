@@ -1,5 +1,5 @@
 class AppStrings {
   AppStrings._();
 
-  static const String supervisedBy = "Supervised by Mohamed Nabil";
+  static const String baseUrl = 'https://movies-api.accel.li/api/v2/';
 }

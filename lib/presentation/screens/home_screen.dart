@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,6 +7,7 @@ import '../../core/constants/app_colors.dart';
 import '../../logic/cubits/movies/movies_cubit.dart';
 import '../../logic/cubits/movies/movies_state.dart';
 import '../../logic/cubits/watchlist/watchlist_cubit.dart';
+import '../../core/constants/app_images.dart';
 import 'home_view.dart';
 import 'browse_view.dart';
 import 'profile_view.dart';
@@ -16,7 +19,7 @@ class HomeScreen extends StatefulWidget {
   static final GlobalKey<_HomeScreenState> homeKey = GlobalKey<_HomeScreenState>();
 
   static void navigateToGenre(String genre) {
-    print("Navigating to genre: $genre");
+    log("Navigating to genre: $genre", name: "HomeScreen");
     homeKey.currentState?._browseCategory(genre);
   }
 
@@ -55,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _browseCategory(String category) {
     if (!mounted) return;
-    print("Switching to Explore tab with category: $category");
+    log("Switching to Explore tab with category: $category", name: "HomeScreen");
     setState(() {
       _browseInitialCategory = category;
       _selectedIndex = 2; // Browse tab (Explore)
@@ -93,24 +96,25 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         child: Row(
           children: [
-            _buildNavItem(Icons.home, 0),
-            _buildNavItem(Icons.search, 1),
-            _buildNavItem(Icons.explore, 2),
-            _buildNavItem(Icons.person, 3),
+            _buildNavItem(AppImages.homeIcon,0),
+            _buildNavItem(AppImages.searchIcon, 1),
+            _buildNavItem(AppImages.exploreIcon, 2),
+            _buildNavItem(AppImages.profileIcon, 3),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildNavItem(IconData icon, int index) {
+  Widget _buildNavItem(String iconPath, int index) {
     return Expanded(
       child: GestureDetector(
         onTap: () => _onItemTapped(index),
         behavior: HitTestBehavior.opaque,
-        child: Icon(
-          icon,
-          size: 23.h,
+        child: Image.asset(
+          iconPath,
+          width: 26.w,
+          height: 23.h,
           color: _selectedIndex == index ? AppColors.yellow : Colors.white,
         ),
       ),

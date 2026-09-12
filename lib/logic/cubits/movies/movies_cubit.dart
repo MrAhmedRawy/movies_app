@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../data/models/movie_model.dart';
 import '../../../data/repositories/movie_repository.dart';
@@ -6,7 +8,6 @@ import 'movies_state.dart';
 class MoviesCubit extends Cubit<MoviesState> {
   final MovieRepository _repository;
   
-  // Cache home data
   HomeLoaded? _lastHomeData;
 
   MoviesCubit(this._repository) : super(MoviesInitial());
@@ -62,20 +63,18 @@ class MoviesCubit extends Cubit<MoviesState> {
         ));
       }
     } catch (e) {
-      // Don't emit error to avoid clearing existing results, maybe just log it
+      log('Error loading more movies: $e');
     }
   }
 
   Future<void> fetchHomeData() async {
     emit(HomeLoading());
     try {
-      // 1. Fetch Available Now (sorted by year)
       final availableNow = await _repository.getAllMovies(
         sortBy: 'year',
         limit: 10,
       );
 
-      // 2. Select 3 random genres
       final allGenres = [
         'Action', 'Adventure', 'Animation', 'Biography', 'Comedy', 'Crime',
         'Drama', 'Family', 'Fantasy', 'Horror', 'Romance', 'Sci-Fi', 'Thriller'
@@ -83,7 +82,6 @@ class MoviesCubit extends Cubit<MoviesState> {
       final List<String> shuffledGenres = List.from(allGenres)..shuffle();
       final selectedGenres = shuffledGenres.take(3).toList();
 
-      // 3. Fetch movies for each genre
       final Map<String, List<MovieModel>> categories = {};
       for (var genre in selectedGenres) {
         categories[genre] = await _repository.getAllMovies(

@@ -1,9 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:movies_app/presentation/screens/home_screen.dart';
 import 'package:movies_app/presentation/screens/login_screens/login_screen.dart';
 
 import '../../core/constants/app_images.dart';
-import '../../core/constants/app_strings.dart';
+import '../../l10n/app_localizations.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -17,10 +19,24 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
 
-    Future.delayed(const Duration(seconds: 4), () {
+    Future.delayed(const Duration(seconds: 2), () {
       if (!mounted) return;
-      Navigator.pushReplacement(context, MaterialPageRoute(builder:
-          (context) => const LoginScreen()));
+      
+      final user = FirebaseAuth.instance.currentUser;
+      
+      if (user != null) {
+        // User is already logged in, go to Home
+        Navigator.pushReplacement(
+          context, 
+          MaterialPageRoute(builder: (context) => HomeScreen(key: HomeScreen.homeKey))
+        );
+      } else {
+        // Not logged in, go to Login
+        Navigator.pushReplacement(
+          context, 
+          MaterialPageRoute(builder: (context) => const LoginScreen())
+        );
+      }
     });
   }
 
@@ -38,7 +54,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 children: [
                   Image.asset(AppImages.routeLogo, width: 180.w),
                   Text(
-                    AppStrings.supervisedBy,
+                    AppLocalizations.of(context)!.supervisedBy,
                     style: TextStyle(
                       fontSize: 16.sp,
                       fontWeight: FontWeight.w400,

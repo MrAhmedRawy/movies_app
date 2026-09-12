@@ -403,6 +403,246 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Wrong Email or Password'**
   String get wrongEmailOrPassword;
+
+  /// No description provided for @screenshots.
+  ///
+  /// In en, this message translates to:
+  /// **'Screen Shots'**
+  String get screenshots;
+
+  /// No description provided for @similar.
+  ///
+  /// In en, this message translates to:
+  /// **'Similar'**
+  String get similar;
+
+  /// No description provided for @summary.
+  ///
+  /// In en, this message translates to:
+  /// **'Summary'**
+  String get summary;
+
+  /// No description provided for @cast.
+  ///
+  /// In en, this message translates to:
+  /// **'Cast'**
+  String get cast;
+
+  /// No description provided for @genres.
+  ///
+  /// In en, this message translates to:
+  /// **'Genres'**
+  String get genres;
+
+  /// No description provided for @noMoviesFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No movies found'**
+  String get noMoviesFound;
+
+  /// No description provided for @profileUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile updated successfully'**
+  String get profileUpdated;
+
+  /// No description provided for @resetLinkSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset link sent to your email'**
+  String get resetLinkSent;
+
+  /// No description provided for @deleteAccountConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete your account? This action cannot be undone.'**
+  String get deleteAccountConfirm;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete;
+
+  /// No description provided for @retry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get retry;
+
+  /// No description provided for @userName.
+  ///
+  /// In en, this message translates to:
+  /// **'User Name'**
+  String get userName;
+
+  /// No description provided for @seeMore.
+  ///
+  /// In en, this message translates to:
+  /// **'See More'**
+  String get seeMore;
+
+  /// No description provided for @wishList.
+  ///
+  /// In en, this message translates to:
+  /// **'Wish List'**
+  String get wishList;
+
+  /// No description provided for @action.
+  ///
+  /// In en, this message translates to:
+  /// **'Action'**
+  String get action;
+
+  /// No description provided for @adventure.
+  ///
+  /// In en, this message translates to:
+  /// **'Adventure'**
+  String get adventure;
+
+  /// No description provided for @animation.
+  ///
+  /// In en, this message translates to:
+  /// **'Animation'**
+  String get animation;
+
+  /// No description provided for @biography.
+  ///
+  /// In en, this message translates to:
+  /// **'Biography'**
+  String get biography;
+
+  /// No description provided for @comedy.
+  ///
+  /// In en, this message translates to:
+  /// **'Comedy'**
+  String get comedy;
+
+  /// No description provided for @crime.
+  ///
+  /// In en, this message translates to:
+  /// **'Crime'**
+  String get crime;
+
+  /// No description provided for @documentary.
+  ///
+  /// In en, this message translates to:
+  /// **'Documentary'**
+  String get documentary;
+
+  /// No description provided for @drama.
+  ///
+  /// In en, this message translates to:
+  /// **'Drama'**
+  String get drama;
+
+  /// No description provided for @family.
+  ///
+  /// In en, this message translates to:
+  /// **'Family'**
+  String get family;
+
+  /// No description provided for @fantasy.
+  ///
+  /// In en, this message translates to:
+  /// **'Fantasy'**
+  String get fantasy;
+
+  /// No description provided for @historyGenre.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get historyGenre;
+
+  /// No description provided for @horror.
+  ///
+  /// In en, this message translates to:
+  /// **'Horror'**
+  String get horror;
+
+  /// No description provided for @music.
+  ///
+  /// In en, this message translates to:
+  /// **'Music'**
+  String get music;
+
+  /// No description provided for @musical.
+  ///
+  /// In en, this message translates to:
+  /// **'Musical'**
+  String get musical;
+
+  /// No description provided for @mystery.
+  ///
+  /// In en, this message translates to:
+  /// **'Mystery'**
+  String get mystery;
+
+  /// No description provided for @news.
+  ///
+  /// In en, this message translates to:
+  /// **'News'**
+  String get news;
+
+  /// No description provided for @romance.
+  ///
+  /// In en, this message translates to:
+  /// **'Romance'**
+  String get romance;
+
+  /// No description provided for @sciFi.
+  ///
+  /// In en, this message translates to:
+  /// **'Sci-Fi'**
+  String get sciFi;
+
+  /// No description provided for @sport.
+  ///
+  /// In en, this message translates to:
+  /// **'Sport'**
+  String get sport;
+
+  /// No description provided for @thriller.
+  ///
+  /// In en, this message translates to:
+  /// **'Thriller'**
+  String get thriller;
+
+  /// No description provided for @war.
+  ///
+  /// In en, this message translates to:
+  /// **'War'**
+  String get war;
+
+  /// No description provided for @western.
+  ///
+  /// In en, this message translates to:
+  /// **'Western'**
+  String get western;
+
+  /// No description provided for @character.
+  ///
+  /// In en, this message translates to:
+  /// **'Character'**
+  String get character;
+
+  /// No description provided for @unknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get unknown;
+
+  /// No description provided for @supervisedBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Supervised by Mohamed Nabil'**
+  String get supervisedBy;
 }
 
 class _AppLocalizationsDelegate

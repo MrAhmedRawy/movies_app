@@ -5,6 +5,7 @@ import '../../core/constants/app_colors.dart';
 import '../../core/constants/app_images.dart';
 import '../../logic/cubits/auth/auth_cubit.dart';
 import '../../logic/cubits/auth/auth_state.dart';
+import '../../l10n/app_localizations.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_text_field.dart';
 import 'login_screens/login_screen.dart';
@@ -41,7 +42,9 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     nameController = TextEditingController(text: widget.userData['name']);
     phoneController = TextEditingController(text: widget.userData['phone']);
     final avatar = widget.userData['avatar'] as String?;
-    selectedAvatar = (avatar == null || avatar.isEmpty) ? AppImages.avtr01 : avatar;
+    selectedAvatar = (avatar == null || avatar.isEmpty)
+        ? AppImages.avtr01
+        : avatar;
   }
 
   @override
@@ -79,19 +82,23 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                   });
                   Navigator.pop(context);
                 },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15.r),
-                      border: isSelected ? Border.all(color: AppColors.yellow, width: 2) : null,
-                      color: isSelected ? AppColors.yellow.withValues(alpha: 0.2) : Colors.transparent,
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(15.r),
-                      child: avatar.startsWith('http')
-                          ? Image.network(avatar, fit: BoxFit.cover)
-                          : Image.asset(avatar, fit: BoxFit.cover),
-                    ),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15.r),
+                    border: isSelected
+                        ? Border.all(color: AppColors.yellow, width: 2)
+                        : null,
+                    color: isSelected
+                        ? AppColors.yellow.withValues(alpha: 0.2)
+                        : Colors.transparent,
                   ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(15.r),
+                    child: avatar.startsWith('http')
+                        ? Image.network(avatar, fit: BoxFit.cover)
+                        : Image.asset(avatar, fit: BoxFit.cover),
+                  ),
+                ),
               );
             },
           ),
@@ -102,12 +109,13 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final local = AppLocalizations.of(context)!;
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is UserDataLoaded) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Profile updated successfully')),
-          );
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(local.profileUpdated)));
           Navigator.pop(context);
         } else if (state is AuthInitial) {
           Navigator.pushAndRemoveUntil(
@@ -116,9 +124,9 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
             (route) => false,
           );
         } else if (state is AuthError) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.message)),
-          );
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(state.message)));
         }
       },
       child: Scaffold(
@@ -131,7 +139,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
             onPressed: () => Navigator.pop(context),
           ),
           title: Text(
-            'Pick Avatar',
+            local.pickAvatar,
             style: TextStyle(
               color: AppColors.yellow,
               fontSize: 20.sp,
@@ -160,23 +168,28 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                             backgroundImage: selectedAvatar.startsWith('http')
                                 ? NetworkImage(selectedAvatar)
                                 : (selectedAvatar.isNotEmpty
-                                    ? AssetImage(selectedAvatar) as ImageProvider
-                                    : null),
+                                      ? AssetImage(selectedAvatar)
+                                            as ImageProvider
+                                      : null),
                             child: (selectedAvatar.isEmpty)
-                                ? Icon(Icons.person, color: Colors.white, size: 50.sp)
+                                ? Icon(
+                                    Icons.person,
+                                    color: Colors.white,
+                                    size: 50.sp,
+                                  )
                                 : null,
                           ),
                         ),
                       ),
                       SizedBox(height: 40.h),
                       CustomTextField(
-                        hintText: 'Name',
+                        hintText: local.name,
                         prefixIcon: Icons.person,
                         controller: nameController,
                       ),
                       SizedBox(height: 20.h),
                       CustomTextField(
-                        hintText: 'Phone Number',
+                        hintText: local.phoneNumber,
                         prefixIcon: Icons.phone,
                         controller: phoneController,
                       ),
@@ -185,13 +198,15 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                         alignment: Alignment.centerLeft,
                         child: TextButton(
                           onPressed: () {
-                            context.read<AuthCubit>().resetPassword(widget.userData['email']);
+                            context.read<AuthCubit>().resetPassword(
+                              widget.userData['email'],
+                            );
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Reset link sent to your email')),
+                              SnackBar(content: Text(local.resetLinkSent)),
                             );
                           },
                           child: Text(
-                            'Reset Password',
+                            local.resetPassword,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 16.sp,
@@ -208,7 +223,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                 child: Column(
                   children: [
                     CustomButton(
-                      text: 'Delete Account',
+                      text: local.deleteAccount,
                       backgroundColor: AppColors.red,
                       textColor: Colors.white,
                       onPressed: () {
@@ -216,22 +231,31 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                           context: context,
                           builder: (context) => AlertDialog(
                             backgroundColor: const Color(0xFF282A28),
-                            title: const Text('Delete Account', style: TextStyle(color: Colors.white)),
-                            content: const Text(
-                              'Are you sure you want to delete your account? This action cannot be undone.',
-                              style: TextStyle(color: Colors.white70),
+                            title: Text(
+                              local.deleteAccount,
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                            content: Text(
+                              local.deleteAccountConfirm,
+                              style: const TextStyle(color: Colors.white70),
                             ),
                             actions: [
                               TextButton(
                                 onPressed: () => Navigator.pop(context),
-                                child: const Text('Cancel', style: TextStyle(color: Colors.white)),
+                                child: Text(
+                                  local.cancel,
+                                  style: const TextStyle(color: Colors.white),
+                                ),
                               ),
                               TextButton(
                                 onPressed: () {
                                   Navigator.pop(context);
                                   context.read<AuthCubit>().deleteAccount();
                                 },
-                                child: const Text('Delete', style: TextStyle(color: AppColors.red)),
+                                child: Text(
+                                  local.delete,
+                                  style: const TextStyle(color: AppColors.red),
+                                ),
                               ),
                             ],
                           ),
@@ -240,13 +264,13 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                     ),
                     SizedBox(height: 16.h),
                     CustomButton(
-                      text: 'Update Data',
+                      text: local.updateData,
                       onPressed: () {
                         context.read<AuthCubit>().updateProfile(
-                              name: nameController.text,
-                              phone: phoneController.text,
-                              avatar: selectedAvatar,
-                            );
+                          name: nameController.text,
+                          phone: phoneController.text,
+                          avatar: selectedAvatar,
+                        );
                       },
                     ),
                   ],

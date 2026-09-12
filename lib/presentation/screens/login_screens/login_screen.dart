@@ -153,8 +153,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   SizedBox(height: 30.h),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Expanded(child: Divider(color: AppColors.yellow)),
+                      Container(
+                        width: 92.96.w,
+                        height: 1.12.h,
+                        color: AppColors.yellow,
+                      ),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 10.w),
                         child: Text(
@@ -162,7 +167,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           style: TextStyle(color: AppColors.yellow),
                         ),
                       ),
-                      const Expanded(child: Divider(color: AppColors.yellow)),
+                      Container(
+                        width: 92.96.w,
+                        height: 1.12.h,
+                        color: AppColors.yellow,
+                      ),
                     ],
                   ),
                   SizedBox(height: 30.h),

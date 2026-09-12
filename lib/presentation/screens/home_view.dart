@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../../core/constants/app_colors.dart';
 import '../../core/constants/app_images.dart';
+import '../../l10n/app_localizations.dart';
 import '../../data/models/movie_model.dart';
 import '../../logic/cubits/movies/movies_cubit.dart';
 import '../../logic/cubits/movies/movies_state.dart';
@@ -43,6 +44,7 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
+    final local = AppLocalizations.of(context)!;
     return BlocBuilder<MoviesCubit, MoviesState>(
       buildWhen: (previous, current) =>
           current is HomeLoaded || current is HomeLoading || current is MoviesError,
@@ -59,7 +61,6 @@ class _HomeViewState extends State<HomeView> {
               children: [
                 Stack(
                   children: [
-                    // Dynamic background
                     SizedBox(
                       height: 600.h,
                       width: double.infinity,
@@ -92,13 +93,12 @@ class _HomeViewState extends State<HomeView> {
                     _buildHeroSection(state.availableNow),
                   ],
                 ),
-                // Remove the potential gap by using a Container with the same background
                 Container(
                   color: AppColors.black,
                   padding: EdgeInsets.symmetric(horizontal: 16.w),
                   child: Column(
                     children: [
-                      SizedBox(height: 10.h), // Smooth transition space
+                      SizedBox(height: 10.h),
                       Center(
                         child: Image.asset(
                           AppImages.watchNow,
@@ -107,9 +107,9 @@ class _HomeViewState extends State<HomeView> {
                       ),
                       SizedBox(height: 20.h),
                       ...state.categories.entries.map((entry) {
-                        return _buildCategorySection(context, entry.key, entry.value);
-                      }).toList(),
-                      SizedBox(height: 120.h), // Extra space for floating bottom nav
+                        return _buildCategorySection(context, _getTranslatedGenre(entry.key, local), entry.value, local);
+                      }),
+                      SizedBox(height: 120.h),
                     ],
                   ),
                 ),
@@ -162,7 +162,7 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
-  Widget _buildCategorySection(BuildContext context, String title, List<MovieModel> movies) {
+  Widget _buildCategorySection(BuildContext context, String title, List<MovieModel> movies, AppLocalizations local) {
     return Column(
       children: [
         Row(
@@ -181,7 +181,7 @@ class _HomeViewState extends State<HomeView> {
               child: Row(
                 children: [
                   Text(
-                    'See More',
+                    local.seeMore,
                     style: TextStyle(color: AppColors.yellow, fontSize: 14.sp),
                   ),
                   Icon(Icons.arrow_forward_ios, color: AppColors.yellow, size: 12.sp),
@@ -204,5 +204,56 @@ class _HomeViewState extends State<HomeView> {
         SizedBox(height: 30.h),
       ],
     );
+  }
+
+  String _getTranslatedGenre(String genre, AppLocalizations local) {
+    switch (genre.toLowerCase()) {
+      case 'action':
+        return local.action;
+      case 'adventure':
+        return local.adventure;
+      case 'animation':
+        return local.animation;
+      case 'biography':
+        return local.biography;
+      case 'comedy':
+        return local.comedy;
+      case 'crime':
+        return local.crime;
+      case 'documentary':
+        return local.documentary;
+      case 'drama':
+        return local.drama;
+      case 'family':
+        return local.family;
+      case 'fantasy':
+        return local.fantasy;
+      case 'history':
+        return local.historyGenre;
+      case 'horror':
+        return local.horror;
+      case 'music':
+        return local.music;
+      case 'musical':
+        return local.musical;
+      case 'mystery':
+        return local.mystery;
+      case 'news':
+        return local.news;
+      case 'romance':
+        return local.romance;
+      case 'sci-fi':
+        return local.sciFi;
+      case 'sport':
+        return local.sport;
+      case 'thriller':
+        return local.thriller;
+      case 'war':
+        return local.war;
+      case 'western':
+        return local.western;
+      default:
+        return genre;
+    }
   }
 }

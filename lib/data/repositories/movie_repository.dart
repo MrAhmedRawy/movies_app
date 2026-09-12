@@ -6,8 +6,20 @@ class MovieRepository {
 
   MovieRepository(this._apiService);
 
-  Future<List<MovieModel>> getAllMovies({int page = 1, int limit = 50, String? genre, String? sortBy, String? query}) async {
-    return await _apiService.getMovies(page: page, limit: limit, genre: genre, sortBy: sortBy, query: query);
+  Future<List<MovieModel>> getAllMovies({
+    int page = 1,
+    int limit = 50,
+    String? genre,
+    String? sortBy,
+    String? query,
+  }) async {
+    return await _apiService.getMovies(
+      page: page,
+      limit: limit,
+      genre: genre,
+      sortBy: sortBy,
+      query: query,
+    );
   }
 
   Future<MovieModel> getMovieById(int id) async {

@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+
+import '../../core/constants/app_strings.dart';
 import '../models/movie_model.dart';
 
 class MovieApiService {
@@ -7,7 +9,7 @@ class MovieApiService {
   MovieApiService()
       : _dio = Dio(
           BaseOptions(
-            baseUrl: 'https://movies-api.accel.li/api/v2/',
+            baseUrl: AppStrings.baseUrl,
             connectTimeout: const Duration(seconds: 10),
             receiveTimeout: const Duration(seconds: 10),
           ),
@@ -18,9 +20,9 @@ class MovieApiService {
       final response = await _dio.get('list_movies.json', queryParameters: {
         'page': page,
         'limit': limit,
-        if (genre != null) 'genre': genre,
-        if (sortBy != null) 'sort_by': sortBy,
-        if (query != null) 'query_term': query,
+        'genre': ?genre,
+        'sort_by': ?sortBy,
+        'query_term': ?query,
       });
 
       if (response.statusCode == 200) {

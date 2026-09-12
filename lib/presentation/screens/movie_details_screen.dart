@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../../core/constants/app_colors.dart';
 import '../../data/models/movie_model.dart';
+import '../../l10n/app_localizations.dart';
 import '../../logic/cubits/movies/movies_cubit.dart';
 import '../../logic/cubits/movies/movies_state.dart';
 import '../../logic/cubits/watchlist/watchlist_cubit.dart';
@@ -30,6 +31,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final local = AppLocalizations.of(context)!;
     return BlocListener<WatchlistCubit, WatchlistState>(
       listener: (context, state) {
         if (state is WatchlistError) {
@@ -69,17 +71,17 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(height: 20.h),
-                          _buildWatchButton(),
+                          _buildWatchButton(local),
                           SizedBox(height: 20.h),
                           _buildStatsRow(movie),
                           SizedBox(height: 30.h),
-                          _buildSectionTitle('Screen Shots'),
+                          _buildSectionTitle(local.screenshots),
                           _buildScreenShots(movie),
                           SizedBox(height: 30.h),
-                          _buildSectionTitle('Similar'),
+                          _buildSectionTitle(local.similar),
                           _buildSimilarMovies(suggestions),
                           SizedBox(height: 30.h),
-                          _buildSectionTitle('Summary'),
+                          _buildSectionTitle(local.summary),
                           Text(
                             movie.descriptionFull ?? movie.summary ?? '',
                             style: TextStyle(
@@ -89,11 +91,11 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                             ),
                           ),
                           SizedBox(height: 30.h),
-                          _buildSectionTitle('Cast'),
-                          _buildCastList(movie.cast),
+                          _buildSectionTitle(local.cast),
+                          _buildCastList(movie.cast, local),
                           SizedBox(height: 30.h),
-                          _buildSectionTitle('Genres'),
-                          _buildGenresList(movie.genres),
+                          _buildSectionTitle(local.genres),
+                          _buildGenresList(movie.genres, local),
                           SizedBox(height: 50.h),
                         ],
                       ),
@@ -215,7 +217,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
     );
   }
 
-  Widget _buildWatchButton() {
+  Widget _buildWatchButton(AppLocalizations local) {
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
@@ -228,7 +230,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
           padding: EdgeInsets.symmetric(vertical: 16.h),
         ),
         child: Text(
-          'Watch',
+          local.watch,
           style: TextStyle(
             color: Colors.white,
             fontSize: 20.sp,
@@ -347,7 +349,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
     );
   }
 
-  Widget _buildCastList(List<CastModel>? cast) {
+  Widget _buildCastList(List<CastModel>? cast, AppLocalizations local) {
     if (cast == null || cast.isEmpty) return const SizedBox.shrink();
     return Column(
       children: cast
@@ -376,7 +378,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Name : ${c.name ?? "Unknown"}',
+                          '${local.name} : ${c.name ?? local.unknown}',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 16.sp,
@@ -385,7 +387,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                         ),
                         SizedBox(height: 4.h),
                         Text(
-                          'Character : ${c.characterName ?? "Unknown"}',
+                          '${local.character} : ${c.characterName ?? local.unknown}',
                           style: TextStyle(
                             color: Colors.white70,
                             fontSize: 14.sp,
@@ -402,7 +404,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
     );
   }
 
-  Widget _buildGenresList(List<String>? genres) {
+  Widget _buildGenresList(List<String>? genres, AppLocalizations local) {
     if (genres == null || genres.isEmpty) return const SizedBox.shrink();
     return Wrap(
       spacing: 12.w,
@@ -418,7 +420,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                   borderRadius: BorderRadius.circular(10.r),
                 ),
                 child: Text(
-                  genre,
+                  _getTranslatedGenre(genre, local),
                   style: TextStyle(color: Colors.white, fontSize: 14.sp),
                 ),
               ),
@@ -426,5 +428,56 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
           )
           .toList(),
     );
+  }
+
+  String _getTranslatedGenre(String genre, AppLocalizations local) {
+    switch (genre.toLowerCase()) {
+      case 'action':
+        return local.action;
+      case 'adventure':
+        return local.adventure;
+      case 'animation':
+        return local.animation;
+      case 'biography':
+        return local.biography;
+      case 'comedy':
+        return local.comedy;
+      case 'crime':
+        return local.crime;
+      case 'documentary':
+        return local.documentary;
+      case 'drama':
+        return local.drama;
+      case 'family':
+        return local.family;
+      case 'fantasy':
+        return local.fantasy;
+      case 'history':
+        return local.historyGenre;
+      case 'horror':
+        return local.horror;
+      case 'music':
+        return local.music;
+      case 'musical':
+        return local.musical;
+      case 'mystery':
+        return local.mystery;
+      case 'news':
+        return local.news;
+      case 'romance':
+        return local.romance;
+      case 'sci-fi':
+        return local.sciFi;
+      case 'sport':
+        return local.sport;
+      case 'thriller':
+        return local.thriller;
+      case 'war':
+        return local.war;
+      case 'western':
+        return local.western;
+      default:
+        return genre;
+    }
   }
 }

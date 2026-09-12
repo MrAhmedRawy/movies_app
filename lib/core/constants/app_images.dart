@@ -3,6 +3,7 @@ class AppImages {
 
   static const String _imagePath = "assets/images/";
   static const String _avatarPath = "assets/avatars/";
+  static const String _iconPath = "assets/icons/";
 
   // Images
   static const String eg = "${_imagePath}EG.png";
@@ -31,4 +32,10 @@ class AppImages {
   static const String avtr07 = "${_avatarPath}avtr07.png";
   static const String avtr08 = "${_avatarPath}avtr08.png";
   static const String avtr09 = "${_avatarPath}avtr09.png";
+
+  // Icons
+  static const String homeIcon = "${_iconPath}home.png";
+  static const String searchIcon = "${_iconPath}Vector.png";
+  static const String exploreIcon = "${_iconPath}explore.png";
+  static const String profileIcon = "${_iconPath}Profiel.png";
 }
